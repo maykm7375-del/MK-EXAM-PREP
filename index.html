@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MK EXAM PREP</title>
+
+<style>
+:root {
+  --bg: #0b1220;
+  --panel: #172338;
+  --panel2: #22334d;
+  --blue: #2563eb;
+  --cyan: #38bdf8;
+  --green: #16a34a;
+  --red: #ef4444;
+  --text: #f8fafc;
+  --muted: #a8b6ca;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  width: 94%;
+  max-width: 900px;
+  margin: 25px auto;
+}
+
+header {
+  background: linear-gradient(135deg,#172554,#0f766e);
+  text-align: center;
+  padding: 28px 15px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+}
+
+header h1 {
+  color: white;
+  font-size: 30px;
+  margin: 0 0 8px;
+}
+
+header p { color: #dbeafe; }
+
+.card {
+  background: var(--panel);
+  padding: 22px;
+  border-radius: 15px;
+  margin-bottom: 18px;
+}
+
+h2, h3 { margin-top: 0; }
+
+p { line-height: 1.5; }
+
+.muted { color: var(--muted); }
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 13px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--blue);
+  color: white;
+}
+
+.green {
+  background: var(--green);
+  color: white;
+}
+
+.gray {
+  background: #475569;
+  color: white;
+}
+
+.red {
+  background: #b91c1c;
+  color: white;
+}
+
+.full {
+  width: 100%;
+  margin: 7px 0;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: #0f172a;
+  color: white;
+}
+
+.hidden { display: none !important; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
+.stat {
+  background: var(--panel2);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 26px;
+  color: var(--cyan);
+  margin-top: 8px;
+}
+
+.stream {
+  background: var(--panel2);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+#timer {
+  color: #facc15;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: right;
+}
+
+#progress {
+  height: 10px;
+  background: #334155;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+#bar {
+  height: 100%;
+  width: 0%;
+  background: var(--green);
+}
+
+#navigator {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.nav-number {
+  background: #e2e8f0;
+  color: #172033;
+  padding: 11px 5px;
+}
+
+.nav-number.active {
+  background: var(--blue);
+  color: white;
+}
+
+.nav-number.done {
+  background: var(--green);
+  color: white;
+}
+
+.option {
+  width: 100%;
+  display: block;
+  text-align: left;
+  margin: 10px 0;
+  background: var(--panel2);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.option.selected {
+  border-color: var(--cyan);
+  background: #1d4ed8;
+}
+
+.navigation {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.navigation button { flex: 1; }
+
+.tag {
+  display: inline-block;
+  background: #334155;
+  color: #bae6fd;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin: 3px;
+}
+
+.review-item {
+  background: var(--panel2);
+  padding: 14px;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+
+.correct { color: #4ade80; }
+.wrong { color: #f87171; }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
+}
+
+@media(max-width:500px) {
+  .grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 25px; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <h1>MK EXAM PREP</h1>
+  <p>Ethiopian Grade 12 Entrance Exam Practice</p>
+  <p>Learn • Practice • Improve</p>
+</header>
+
+<!-- HOME -->
+<section id="home" class="card">
+  <h2>Welcome to MK EXAM PREP</h2>
+  <p class="muted">Your Grade 12 entrance exam practice platform.</p>
+
+  <label for="studentName">Student name</label>
+  <input id="studentName" placeholder="Enter your name">
+
+  <button class="primary full" onclick="saveStudent()">
+    Save Student Name
+  </button>
+
+  <p id="welcome"></p>
+
+  <div class="grid">
+    <div class="stat">
+      Practice Questions
+      <strong>100</strong>
+    </div>
+    <div class="stat">
+      Exam Streams
+      <strong>2</strong>
+    </div>
+  </div>
+
+  <div class="stream">
+    <h3>Natural Science</h3>
+    <p class="muted">Biology, Chemistry, Physics and Mathematics.</p>
+    <button class="primary full" onclick="startExam('Natural Science')">
+      Start Natural Science
+    </button>
+  </div>
+
+  <div class="stream">
+    <h3>Social Science</h3>
+    <p class="muted">History, Geography, Economics and Civics.</p>
+    <button class="primary full" onclick="startExam('Social Science')">
+      Start Social Science
+    </button>
+  </div>
+
+  <button class="gray full" onclick="showDashboard()">
+    Student Dashboard
+  </button>
+
+  <button class="gray full" onclick="showAdmin()">
+    Admin Dashboard Demo
+  </button>
+</section>
+
+<!-- EXAM -->
+<section id="exam" class="card hidden">
+  <h2 id="streamTitle">Exam</h2>
+
+  <div id="timer">60:00</div>
+
+  <p id="questionCount"></p>
+  <div id="progress"><div id="bar"></div></div>
+
+  <p>Question Navigator</p>
+  <div id="navigator"></div>
+
+  <hr>
+
+  <p id="subjectTag"></p>
+  <h3 id="questionText"></h3>
+  <div id="options"></div>
+
+  <div class="navigation">
+    <button class="gray" id="prevBtn" onclick="previousQuestion()">
+      Previous
+    </button>
+    <button class="primary" id="nextBtn" onclick="nextQuestion()">
+      Next
+    </button>
+  </div>
+
+  <button class="green full" onclick="submitExam(false)">
+    Submit Exam
+  </button>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="card hidden">
+  <h2>Exam Results</h2>
+  <div class="stat">
+    Your Score
+    <strong id="score">0/50</strong>
+    <p id="percentage"></p>
+  </div>
+
+  <h3>Answer Review</h3>
+  <div id="review"></div>
+
+  <button class="primary full" onclick="backHome()">
+    Back to Home
+  </button>
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section id="dashboard" class="card hidden">
+  <h2>Student Dashboard</h2>
+  <p id="dashboardName"></p>
+
+  <div class="grid">
+    <div class="stat">
+      Total Attempts
+      <strong id="attempts">0</strong>
+    </div>
+    <div class="stat">
+      Best Score
+      <strong id="bestScore">0%</strong>
+    </div>
+  </div>
+
+  <h3>Previous Results</h3>
+  <div id="history"></div>
+
+  <button class="gray full" onclick="backHome()">Back Home</button>
+</section>
+
+<!-- ADMIN DEMO -->
+<section id="admin" class="card hidden">
+  <h2>Admin Dashboard Demo</h2>
+
+  <p class="muted">
+    This is a local demonstration dashboard.
+    It is not protected by a real admin login and does not manage a live server.
+  </p>
+
+  <div class="grid">
+    <div class="stat">
+      Total Questions
+      <strong id="totalQuestions">100</strong>
+    </div>
+    <div class="stat">
+      Saved Attempts
+      <strong id="adminAttempts">0</strong>
+    </div>
+  </div>
+
+  <h3>Question Bank</h3>
+  <p>Questions are stored inside the website code.</p>
+
+  <h3>Saved Student Results</h3>
+  <div id="adminHistory"></div>
+
+  <button class="red full" onclick="clearHistory()">
+    Clear Saved Results
+  </button>
+
+  <button class="gray full" onclick="backHome()">Back Home</button>
+</section>
+
+<footer>
+  MK EXAM PREP © 2026
+  <br>
+  Keep Learning, Keep Improving.
+</footer>
+
+</div>
+
+<script>
+
+// =================================
+// QUESTION BANK
+// Each question has:
+// subject, difficulty, question,
+// four choices and correct answer.
+// =================================
+
+const bank = {
+
+"Natural Science": [
+
+["Biology","Easy","What is the basic unit of life?",["Atom","Cell","Tissue","Organ"],1],
+["Biology","Easy","Which organelle produces most cellular ATP?",["Nucleus","Mitochondrion","Ribosome","Golgi body"],1],
+["Biology","Easy","Which gas is released during photosynthesis?",["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],1],
+["Biology","Easy","Which molecule carries genetic information?",["Protein","DNA","Glucose","Lipid"],1],
+["Biology","Medium","Where does photosynthesis mainly occur?",["Mitochondria","Chloroplasts","Ribosomes","Nucleus"],1],
+["Biology","Medium","Which process produces two genetically similar daughter cells?",["Meiosis","Mitosis","Fertilization","Mutation"],1],
+["Biology","Medium","What happens to an animal cell in a strongly hypotonic solution?",["It loses water","It gains water","It stays unchanged","It loses its nucleus"],1],
+["Biology","Medium","Which blood cells mainly transport oxygen?",["White blood cells","Red blood cells","Platelets","Plasma cells"],1],
+["Biology","Hard","In which phase of meiosis do homologous chromosomes separate?",["Prophase I","Metaphase I","Anaphase I","Anaphase II"],2],
+["Biology","Hard","If Aa is crossed with Aa, what fraction is expected to be aa?",["0%","25%","50%","75%"],1],
+["Biology","Hard","Which process produces most ATP during aerobic respiration?",["Glycolysis","Krebs cycle","Electron transport chain","Fermentation"],2],
+["Biology","Medium","Which structure controls movement of substances into and out of a cell?",["Cell membrane","Cell wall","Nucleolus","Chromosome"],0],
+["Biology","Hard","What is the main role of decomposers in an ecosystem?",["Produce sunlight","Recycle nutrients","Stop photosynthesis","Create consumers"],1],
+
+["Chemistry","Easy","What is the chemical symbol for oxygen?",["Ox","O","Og","Oy"],1],
+["Chemistry","Easy","What is the pH of a neutral solution at 25°C?",["0","5","7","14"],2],
+["Chemistry","Easy","Which particle has a negative charge?",["Proton","Neutron","Electron","Nucleus"],2],
+["Chemistry","Medium","What is the atomic number equal to?",["Number of neutrons","Number of protons","Protons plus neutrons","Number of shells"],1],
+["Chemistry","Medium","Which type of bond involves sharing electron pairs?",["Ionic","Covalent","Metallic","Hydrogen"],1],
+["Chemistry","Medium","What is the formula of water?",["CO2","H2O","O2","H2O2"],1],
+["Chemistry","Medium","Which gas is produced when an acid reacts with many metals?",["Oxygen","Hydrogen","Nitrogen","Chlorine"],1],
+["Chemistry","Hard","How many moles are in 18 grams of water? (Molar mass = 18 g/mol)",["0.5","1","2","18"],1],
+["Chemistry","Hard","What is the oxidation number of oxygen in most compounds?",["+1","-1","-2","+2"],2],
+["Chemistry","Hard","Which principle states that matter is not created or destroyed in a chemical reaction?",["Conservation of mass","Uncertainty principle","Boyle's law","Periodic law"],0],
+["Chemistry","Medium","Which element is a noble gas?",["Sodium","Chlorine","Neon","Calcium"],2],
+["Chemistry","Hard","What is the main product of complete combustion of a hydrocarbon?",["Carbon dioxide and water","Carbon and hydrogen","Nitrogen and oxygen","Salt and water"],0],
+
+["Physics","Easy","What is the SI unit of force?",["Joule","Newton","Watt","Pascal"],1],
+["Physics","Easy","What is the approximate speed of light in a vacuum?",["300 m/s","3,000 m/s","300,000,000 m/s","30,000 m/s"],2],
+["Physics","Easy","Which instrument measures electric current?",["Voltmeter","Ammeter","Thermometer","Barometer"],1],
+["Physics","Medium","What is the formula for speed?",["Distance × time","Distance / time","Time / distance","Mass × acceleration"],1],
+["Physics","Medium","What is the SI unit of energy?",["Newton","Joule","Ampere","Ohm"],1],
+["Physics","Medium","According to Newton's second law, force equals:",["Mass × acceleration","Mass / acceleration","Velocity × time","Energy / time"],0],
+["Physics","Medium","What happens to the resistance of a wire if its length increases, with other factors unchanged?",["It decreases","It increases","It becomes zero","It stays the same"],1],
+["Physics","Hard","A 2 kg object accelerates at 3 m/s². What is the net force?",["2 N","3 N","5 N","6 N"],3],
+["Physics","Hard","A 12 V battery is connected to a 4 Ω resistor. What current flows?",["2 A","3 A","4 A","48 A"],1],
+["Physics","Hard","What is the SI unit of frequency?",["Hertz","Watt","Tesla","Coulomb"],0],
+["Physics","Medium","Which type of wave requires a material medium?",["Electromagnetic wave","Sound wave","Light wave","Radio wave"],1],
+["Physics","Hard","What is the kinetic energy of a 2 kg object moving at 3 m/s?",["3 J","6 J","9 J","18 J"],2],
+["Physics","Hard","What happens to the image formed by a plane mirror?",["It is real and inverted","It is virtual and upright","It is always enlarged","It is always smaller"],1],
+
+["Mathematics","Easy","What is 5 × 6?",["20","25","30","35"],2],
+["Mathematics","Easy","What is the square root of 144?",["10","11","12","14"],2],
+["Mathematics","Easy","What is 25% of 200?",["25","40","50","75"],2],
+["Mathematics","Medium","Solve: 2x + 6 = 14.",["2","3","4","5"],2],
+["Mathematics","Medium","What is the slope of y = 3x + 2?",["2","3","5","-3"],1],
+["Mathematics","Medium","What is the area of a triangle with base 10 and height 6?",["16","30","60","120"],1],
+["Mathematics","Medium","What is sin 30°?",["0","1/2","√2/2","1"],1],
+["Mathematics","Hard","What is the derivative of x²?",["x","2x","x³","2"],1],
+["Mathematics","Hard","Solve x² - 5x + 6 = 0.",["1 and 6","2 and 3","-2 and -3","0 and 6"],1],
+["Mathematics","Hard","What is the probability of getting heads on a fair coin?",["0","1/4","1/2","1"],2],
+["Mathematics","Hard","What is the determinant of [[2,1],[3,4]]?",["5","8","11","14"],0],
+["Mathematics","Medium","What is the sum of the interior angles of a triangle?",["90°","180°","270°","360°"],1]
+
+],
+
+"Social Science": [
+
+["History","Easy","In which country is the ancient city of Aksum located?",["Kenya","Ethiopia","Sudan","Egypt"],1],
+["History","Easy","Which ancient kingdom was centred at Aksum?",["Zagwe","Aksumite Kingdom","Gondar","Kaffa"],1],
+["History","Medium","Which dynasty built the famous rock-hewn churches of Lalibela?",["Solomonic","Zagwe","Ottoman","Mamluk"],1],
+["History","Medium","Who led Ethiopian forces at the Battle of Adwa in 1896?",["Emperor Menelik II","Tewodros II","Yohannes IV","Haile Selassie"],0],
+["History","Easy","In which year did the Battle of Adwa take place?",["1886","1896","1906","1916"],1],
+["History","Medium","Which ancient civilization developed along the Nile River in northeastern Africa?",["Roman","Egyptian","Greek","Persian"],1],
+["History","Medium","What was the main purpose of the Berlin Conference of 1884–1885?",["End slavery worldwide","Regulate European colonization in Africa","Create the United Nations","Start World War I"],1],
+["History","Hard","Which event is commonly associated with the beginning of World War I in 1914?",["Fall of Berlin","Assassination of Archduke Franz Ferdinand","Russian Revolution","Treaty of Versailles"],1],
+["History","Hard","Which treaty formally ended World War I between Germany and the Allied Powers?",["Treaty of Rome","Treaty of Versailles","Treaty of Paris 1763","Treaty of Utrecht"],1],
+["History","Medium","Which Ethiopian emperor modernized the country during the late nineteenth century and fought at Adwa?",["Menelik II","Lalibela","Zara Yaqob","Tewodros II"],0],
+["History","Hard","The Industrial Revolution began in which country?",["France","Germany","Britain","Italy"],2],
+["History","Medium","Which organization was established in 1945 to promote international peace and cooperation?",["African Union","United Nations","European Union","League of Nations"],1],
+["History","Hard","Which event in 1789 became a major turning point in French history?",["French Revolution","Russian Revolution","American Civil War","Industrial Revolution"],0],
+
+["Geography","Easy","Ethiopia is located in which continent?",["Asia","Europe","Africa","Australia"],2],
+["Geography","Easy","What is the capital city of Ethiopia?",["Nairobi","Addis Ababa","Asmara","Khartoum"],1],
+["Geography","Medium","Which is the largest ocean in the world?",["Atlantic","Indian","Arctic","Pacific"],3],
+["Geography","Medium","What is the imaginary line at 0° latitude called?",["Prime Meridian","Equator","Tropic of Cancer","Arctic Circle"],1],
+["Geography","Medium","Which instrument is used to measure atmospheric pressure?",["Thermometer","Barometer","Hygrometer","Anemometer"],1],
+["Geography","Easy","Which river is strongly associated with ancient Egyptian civilization?",["Amazon","Nile","Congo","Zambezi"],1],
+["Geography","Medium","What is population density?",["Births per year","People per unit area","Total number of cities","Deaths per year"],1],
+["Geography","Hard","What causes the seasons on Earth?",["Changing distance from the Sun only","Earth's axial tilt as it revolves around the Sun","Daily rotation only","Ocean tides"],1],
+["Geography","Medium","Which layer of the atmosphere contains most weather events?",["Stratosphere","Troposphere","Mesosphere","Thermosphere"],1],
+["Geography","Hard","Which type of rainfall occurs when moist air rises over a mountain?",["Convectional","Relief or orographic","Frontal","Cyclonic"],1],
+["Geography","Medium","Which map line connects places with equal elevation?",["Isobar","Contour line","Latitude","Longitude"],1],
+["Geography","Hard","What is desertification?",["Expansion of forests","Land degradation in dry areas","Formation of glaciers","Increase in rainfall"],1],
+["Geography","Medium","Which of these is a renewable energy source?",["Coal","Petroleum","Solar energy","Natural gas"],2],
+
+["Economics","Easy","What is economics mainly concerned with?",["Unlimited resources","Scarcity and choice","Only money","Only trade"],1],
+["Economics","Easy","What is opportunity cost?",["Total income","Next best alternative given up","Market price","Total profit"],1],
+["Economics","Medium","What usually happens to quantity demanded when price rises, other things equal?",["It rises","It falls","It stays fixed","It becomes unlimited"],1],
+["Economics","Medium","What is inflation?",["A fall in general prices","A sustained rise in the general price level","A rise in production only","A decrease in population"],1],
+["Economics","Medium","Which institution commonly controls monetary policy in a country?",["Central bank","Primary school","Hospital","Local market"],0],
+["Economics","Easy","What is a market?",["A place or system for exchange","Only a supermarket","A government office","A type of tax"],0],
+["Economics","Medium","What is GDP used to measure?",["Total population","Value of final goods and services produced within a country","Only exports","Government debt only"],1],
+["Economics","Hard","If demand increases while supply stays constant, what normally happens to equilibrium price?",["It falls","It rises","It becomes zero","It cannot change"],1],
+["Economics","Medium","Which of the following is a factor of production?",["Land","Inflation","Demand","Price"],0],
+["Economics","Hard","What is the opportunity cost of producing more of one good?",["Nothing","The other goods that must be given up","Only the money earned","Total tax revenue"],1],
+["Economics","Medium","What is a budget deficit?",["Government revenue exceeds spending","Government spending exceeds revenue","Exports exceed imports","Savings exceed investment"],1],
+["Economics","Hard","What does price elasticity of demand measure?",["How supply changes with technology","How responsive quantity demanded is to price changes","Total market population","The cost of production"],1],
+
+["Civics","Easy","Which institution makes laws in a democracy?",["Parliament","Hospital","Bank","School"],0],
+["Civics","Easy","What is a constitution?",["A country's basic legal framework","A type of market","A private contract only","A school timetable"],0],
+["Civics","Medium","What is the rule of law?",["Leaders are above the law","Everyone is subject to the law","Only citizens follow laws","Laws apply only to businesses"],1],
+["Civics","Medium","Which is an example of a fundamental human right?",["Right to education","Right to ignore all laws","Right to take others' property","Right to harm others"],0],
+["Civics","Easy","What is democracy?",["Rule by one person without limits","Government in which people participate in choosing leaders","Rule by the military only","Government without laws"],1],
+["Civics","Medium","What is separation of powers?",["Giving all power to one office","Dividing government powers among branches","Removing courts","Ending elections"],1],
+["Civics","Medium","What is citizenship?",["Membership in a political community with rights and responsibilities","Owning a business","Having a job only","Living in a city temporarily"],0],
+["Civics","Hard","What is the main role of an independent judiciary?",["Make all political decisions","Interpret laws and administer justice independently","Control every business","Write school textbooks"],1],
+["Civics","Medium","What is a responsibility of citizens?",["Respecting the law","Ignoring public rules","Preventing others from voting","Destroying public property"],0],
+["Civics","Hard","Why are free and fair elections important?",["They remove all disagreement","They allow people to choose representatives","They eliminate courts","They guarantee identical opinions"],1],
+["Civics","Medium","What does accountability mean in public service?",["Officials answer for their actions","Officials cannot be questioned","Only citizens are responsible","All records must be hidden"],0],
+["Civics","Hard","What is federalism?",["All power held by one central authority","Constitutional division of powers between levels of government","Government without regions","Rule by judges alone"],1]
+
+]
+
+};
+
+// =================================
+// APPLICATION VARIABLES
+// =================================
+
+let questions = [];
+let answers = [];
+let current = 0;
+let timeLeft = 3600;
+let timerInterval = null;
+let submitted = false;
+let currentStream = "";
+
+// =================================
+// PAGE CONTROL
+// =================================
+
+function hidePages() {
+  ["home","exam","result","dashboard","admin"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+}
+
+function backHome() {
+  clearInterval(timerInterval);
+  hidePages();
+  document.getElementById("home").classList.remove("hidden");
+  updateWelcome();
+}
+
+// =================================
+// STUDENT NAME
+// =================================
+
+function saveStudent() {
+  let name = document.getElementById("studentName").value.trim();
+
+  if (!name) {
+    alert("Please enter your name.");
+    return;
+  }
+
+  localStorage.setItem("mkStudentName", name);
+  updateWelcome();
+  alert("Student name saved on this device.");
+}
+
+function updateWelcome() {
+  let name = localStorage.getItem("mkStudentName") || "";
+  document.getElementById("studentName").value = name;
+  document.getElementById("welcome").textContent =
+    name ? "Welcome, " + name + "!" : "";
+}
+
+// =================================
+// START EXAM
+// =================================
+
+function startExam(stream) {
+
+  currentStream = stream;
+  questions = bank[stream];
+
+  answers = Array(questions.length).fill(null);
+  current = 0;
+  timeLeft = 3600;
+  submitted = false;
+
+  hidePages();
+  document.getElementById("exam").classList.remove("hidden");
+  document.getElementById("streamTitle").textContent = stream;
+
+  showQuestion();
+  startTimer();
+}
+
+// =================================
+// SHOW QUESTION
+// =================================
+
+function showQuestion() {
+
+  if (submitted) return;
+
+  let q = questions[current];
+
+  document.getElementById("questionCount").textContent =
+    "Question " + (current + 1) + " of " + questions.length;
+
+  document.getElementById("questionText").textContent = q[2];
+
+  document.getElementById("subjectTag").innerHTML =
+    '<span class="tag">' + q[0] + '</span>' +
+    '<span class="tag">' + q[1] + '</span>';
+
+  let html = "";
+
+  q[3].forEach((choice,i) => {
+
+    let selected = answers[current] === i ? "selected" : "";
+
+    html += `
+      <button class="option ${selected}"
+      onclick="chooseAnswer(${i})">
+      ${String.fromCharCode(65+i)}. ${choice}
+      </button>
+    `;
+
+  });
+
+  document.getElementById("options").innerHTML = html;
+
+  document.getElementById("prevBtn").disabled = current === 0;
+
+  document.getElementById("nextBtn").disabled =
+    current === questions.length - 1;
+
+  updateProgress();
+  renderNavigator();
+}
+
+// =================================
+// ANSWER SELECTION
+// =================================
+
+function chooseAnswer(choice) {
+  if (submitted) return;
+
+  answers[current] = choice;
+  showQuestion();
+}
+
+// =================================
+// QUESTION NAVIGATOR
+// =================================
+
+function renderNavigator() {
+
+  let html = "";
+
+  questions.forEach((q,i) => {
+
+    let status = "";
+
+    if (i === current) {
+      status = "active";
+    } else if (answers[i] !== null) {
+      status = "done";
+    }
+
+    html += `
+      <button class="nav-number ${status}"
+      onclick="jumpTo(${i})">${i+1}</button>
+    `;
+
+  });
+
+  document.getElementById("navigator").innerHTML = html;
+}
+
+function jumpTo(number) {
+  if (submitted) return;
+
+  current = number;
+  showQuestion();
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  }
+}
+
+function previousQuestion() {
+  if (current > 0) {
+    current--;
+    showQuestion();
+  }
+}
+
+// =================================
+// PROGRESS
+// =================================
+
+function updateProgress() {
+
+  let completed = answers.filter(a => a !== null).length;
+
+  let percentage = completed / questions.length * 100;
+
+  document.getElementById("bar").style.width =
+    percentage + "%";
+}
+
+// =================================
+// TIMER
+// =================================
+
+function startTimer() {
+
+  clearInterval(timerInterval);
+  updateTimer();
+
+  timerInterval = setInterval(() => {
+
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 0) {
+      submitExam(true);
+    }
+
+  },1000);
+}
+
+function updateTimer() {
+
+  let minutes = Math.floor(timeLeft / 60);
+  let seconds = timeLeft % 60;
+
+  document.getElementById("timer").textContent =
+    String(minutes).padStart(2,"0") + ":" +
+    String(seconds).padStart(2,"0");
+}
+
+// =================================
+// SUBMIT EXAM
+// =================================
+
+function submitExam(timeFinished) {
+
+  if (submitted) return;
+
+  let unanswered = answers.filter(a => a === null).length;
+
+  if (!timeFinished) {
+
+    let message = unanswered > 0
+      ? unanswered + " questions are unanswered. Submit anyway?"
+      : "Are you sure you want to submit?";
+
+    if (!confirm(message)) return;
+  }
+
+  submitted = true;
+  clearInterval(timerInterval);
+
+  let score = 0;
+
+  questions.forEach((q,i) => {
+    if (answers[i] === q[4]) score++;
+  });
+
+  let percent = Math.round(score / questions.length * 100);
+
+  saveResult(score,percent);
+
+  hidePages();
+  document.getElementById("result").classList.remove("hidden");
+
+  document.getElementById("score").textContent =
+    score + " / " + questions.length;
+
+  document.getElementById("percentage").textContent =
+    percent + "%";
+
+  let reviewHTML = "";
+
+  questions.forEach((q,i) => {
+
+    let selected = answers[i] === null
+      ? "Not answered"
+      : q[3][answers[i]];
+
+    let correct = q[3][q[4]];
+
+    let isCorrect = answers[i] === q[4];
+
+    reviewHTML += `
+      <div class="review-item">
+        <strong>Question ${i+1}</strong>
+        <p>${q[2]}</p>
+        <p>Your answer: ${selected}</p>
+        <p>Correct answer: ${correct}</p>
+        <strong class="${isCorrect ? "correct" : "wrong"}">
+          ${isCorrect ? "Correct" : "Incorrect"}
+        </strong>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("review").innerHTML = reviewHTML;
+}
+
+// =================================
+// SAVE RESULTS ON THIS DEVICE
+// =================================
+
+function getHistory() {
+
+  try {
+    return JSON.parse(localStorage.getItem("mkResults")) || [];
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveResult(score,percent) {
+
+  let history = getHistory();
+
+  history.push({
+    stream: currentStream,
+    score: score,
+    total: questions.length,
+    percent: percent,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("mkResults",JSON.stringify(history));
+}
+
+// =================================
+// STUDENT DASHBOARD
+// =================================
+
+function showDashboard() {
+
+  hidePages();
+  document.getElementById("dashboard").classList.remove("hidden");
+
+  let name = localStorage.getItem("mkStudentName") || "Student";
+  let history = getHistory();
+
+  document.getElementById("dashboardName").textContent =
+    "Welcome, " + name;
+
+  document.getElementById("attempts").textContent =
+    history.length;
+
+  let best = history.length
+    ? Math.max(...history.map(r => r.percent))
+    : 0;
+
+  document.getElementById("bestScore").textContent = best + "%";
+
+  let html = "";
+
+  history.slice().reverse().forEach(r => {
+
+    html += `
+      <div class="review-item">
+        <strong>${r.stream}</strong>
+        <p>Score: ${r.score}/${r.total} (${r.percent}%)</p>
+        <small>${r.date}</small>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("history").innerHTML =
+    html || "<p>No exams completed yet.</p>";
+}
+
+// =================================
+// ADMIN DASHBOARD DEMO
+// =================================
+
+function showAdmin() {
+
+  hidePages();
+  document.getElementById("admin").classList.remove("hidden");
+
+  let history = getHistory();
+
+  document.getElementById("totalQuestions").textContent =
+    bank["Natural Science"].length +
+    bank["Social Science"].length;
+
+  document.getElementById("adminAttempts").textContent =
+    history.length;
+
+  let html = "";
+
+  history.forEach(r => {
+
+    html += `
+      <div class="review-item">
+        <strong>${r.stream}</strong>
+        <p>${r.score}/${r.total} (${r.percent}%)</p>
+        <small>${r.date}</small>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("adminHistory").innerHTML =
+    html || "<p>No results available.</p>";
+}
+
+function clearHistory() {
+
+  if (!confirm("Delete all saved exam results on this device?")) return;
+
+  localStorage.removeItem("mkResults");
+  showAdmin();
+}
+
+// =================================
+// INITIALIZE
+// =================================
+
+updateWelcome();
+
+</script>
+
+</body>
+</html>
